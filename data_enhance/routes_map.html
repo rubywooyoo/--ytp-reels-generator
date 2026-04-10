@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d870618a43ed4fb443af920deaaddff3 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        z-index: 1000;
+        background: white;
+        padding: 14px 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+        font-family: sans-serif;
+        font-size: 13px;
+        max-width: 320px;
+    ">
+        <div style="font-weight:bold; margin-bottom:10px; font-size:14px;">🗺 台北一日遊路線</div>
+        
+        <div style="display:flex; align-items:center; margin-bottom:8px;">
+            <div style="width:12px; height:12px; background:#E74C3C; border-radius:50%; margin-right:8px; flex-shrink:0;"></div>
+            <div>
+                <strong>路線 A</strong>：療癒文青花園漫遊<br>
+                <span style="color:#666; font-size:11px;">結合花園、貓咪咖啡與文創空間，完美貼合您的所有偏好。...</span>
+            </div>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin-bottom:8px;">
+            <div style="width:12px; height:12px; background:#2980B9; border-radius:50%; margin-right:8px; flex-shrink:0;"></div>
+            <div>
+                <strong>路線 B</strong>：大稻埕慢活文青行<br>
+                <span style="color:#666; font-size:11px;">以大稻埕為核心，感受台北老城的復古與文藝慢活氛圍。...</span>
+            </div>
+        </div>
+        
+        <div style="display:flex; align-items:center; margin-bottom:8px;">
+            <div style="width:12px; height:12px; background:#27AE60; border-radius:50%; margin-right:8px; flex-shrink:0;"></div>
+            <div>
+                <strong>路線 C</strong>：室內文藝漫遊備案<br>
+                <span style="color:#666; font-size:11px;">精選多樣化的室內文藝景點，即使雨天也能享受台北的文青氣息。...</span>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div style="position:fixed; top:10px; right:10px; z-index:1000; font-family:sans-serif;">
+        <a href="https://www.google.com/maps/dir/?api=1&origin=25.0693501,121.5287696&destination=25.0440698,121.5293583&travelmode=transit&waypoints=25.0532138,121.513859|25.0443187,121.529337" target="_blank"
+           style="display:block; background:#E74C3C; color:white; padding:6px 12px;
+                  border-radius:4px; text-decoration:none; font-size:12px;
+                  margin-bottom:4px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.3);">
+            🚌 路線 A 在 Google Maps 導航
+        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=25.0597689,121.509508&destination=25.0447196,121.5072979&travelmode=transit&waypoints=25.0561135,121.5074769" target="_blank"
+           style="display:block; background:#2980B9; color:white; padding:6px 12px;
+                  border-radius:4px; text-decoration:none; font-size:12px;
+                  margin-bottom:4px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.3);">
+            🚌 路線 B 在 Google Maps 導航
+        </a>
+        <a href="https://www.google.com/maps/dir/?api=1&origin=25.0438366,121.5606383&destination=25.0776139,121.547962&travelmode=transit&waypoints=25.0382251,121.5498394|25.031723,121.5601526" target="_blank"
+           style="display:block; background:#27AE60; color:white; padding:6px 12px;
+                  border-radius:4px; text-decoration:none; font-size:12px;
+                  margin-bottom:4px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,0.3);">
+            🚌 路線 C 在 Google Maps 導航
+        </a></div>
+    
+            <div class="folium-map" id="map_d870618a43ed4fb443af920deaaddff3" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d870618a43ed4fb443af920deaaddff3 = L.map(
+                "map_d870618a43ed4fb443af920deaaddff3",
+                {
+                    center: [25.05117754545455, 121.53129081818183],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8762f7cfcf6a0bf19852914ec892dddc = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8762f7cfcf6a0bf19852914ec892dddc.addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var poly_line_60c9ded273806103780cde4093f6a0e3 = L.polyline(
+                [[25.0693501, 121.5287696], [25.0532138, 121.513859], [25.0443187, 121.529337], [25.0440698, 121.5293583]],
+                {"bubblingMouseEvents": true, "color": "#E74C3C", "dashArray": "8 4", "dashOffset": null, "fill": false, "fillColor": "#E74C3C", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            poly_line_60c9ded273806103780cde4093f6a0e3.bindTooltip(
+                `<div>
+                     路線 A：療癒文青花園漫遊
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6a04232e256dcb84307cc1a20272686f = L.marker(
+                [25.0693501, 121.5287696],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_4859634504f9a54ac59235e77a0aa739 = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #E74C3C;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eA1\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_f575b90e312518e825eb523ad0bc07a4 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d41f5a471f93cc30c51536baf4191327 = $(`<div id="html_d41f5a471f93cc30c51536baf4191327" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#E74C3C; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             療癒文青花園漫遊         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ① 臺北玫瑰園             </div>             <div style="color:#555; margin-bottom:6px;">🕐 09:00 - 10:30</div>             <div style="color:#444; line-height:1.5;">滿足您對『花園』和『玫瑰』的偏好，作為一日遊的清新開端。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJ5X1aDFGpQjQROYTjlSR0GAQ"                    target="_blank"                    style="color:#E74C3C; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_f575b90e312518e825eb523ad0bc07a4.setContent(html_d41f5a471f93cc30c51536baf4191327);
+            
+        
+
+        marker_6a04232e256dcb84307cc1a20272686f.bindPopup(popup_f575b90e312518e825eb523ad0bc07a4)
+        ;
+
+        
+    
+    
+            marker_6a04232e256dcb84307cc1a20272686f.bindTooltip(
+                `<div>
+                     [A1] 臺北玫瑰園 | 09:00 - 10:30
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6a04232e256dcb84307cc1a20272686f.setIcon(div_icon_4859634504f9a54ac59235e77a0aa739);
+            
+    
+            var marker_5446a04eae1c409b72b929f9038ee0dc = L.marker(
+                [25.0532138, 121.513859],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_b46dc4eb326184c9f546c614bfd2cb88 = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #E74C3C;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eA2\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_48da23b29d326018f2b066b5d1a70ba8 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_8cfdefdac0f3bda23e3bf137ab55b5ba = $(`<div id="html_8cfdefdac0f3bda23e3bf137ab55b5ba" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#E74C3C; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             療癒文青花園漫遊         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ② 転運棧-貓咪中途咖啡廳             </div>             <div style="color:#555; margin-bottom:6px;">🕐 11:30 - 13:30</div>             <div style="color:#444; line-height:1.5;">體驗『貓咪友善』的『療癒系』空間，享受『安靜』的『咖啡廳』時光。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJEWrqwAupQjQRmVkNTPMperU"                    target="_blank"                    style="color:#E74C3C; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_48da23b29d326018f2b066b5d1a70ba8.setContent(html_8cfdefdac0f3bda23e3bf137ab55b5ba);
+            
+        
+
+        marker_5446a04eae1c409b72b929f9038ee0dc.bindPopup(popup_48da23b29d326018f2b066b5d1a70ba8)
+        ;
+
+        
+    
+    
+            marker_5446a04eae1c409b72b929f9038ee0dc.bindTooltip(
+                `<div>
+                     [A2] 転運棧-貓咪中途咖啡廳 | 11:30 - 13:30
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5446a04eae1c409b72b929f9038ee0dc.setIcon(div_icon_b46dc4eb326184c9f546c614bfd2cb88);
+            
+    
+            var marker_308065ef82d6eb9030856bf23916ea0c = L.marker(
+                [25.0443187, 121.529337],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_dc4a2de4f53e6553e3687a49a0582afa = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #E74C3C;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eA3\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_70a2084215a822d7590d09199578719d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f1e012d053eaf3ce6fa3df25e3e4510a = $(`<div id="html_f1e012d053eaf3ce6fa3df25e3e4510a" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#E74C3C; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             療癒文青花園漫遊         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ③ 青良書店             </div>             <div style="color:#555; margin-bottom:6px;">🕐 14:00 - 16:00</div>             <div style="color:#444; line-height:1.5;">為喜愛『閱讀空間』的您提供一個『文青』氣息濃厚的場所，沉浸書香。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJbxZcI3upQjQRw7T6jN5BexU"                    target="_blank"                    style="color:#E74C3C; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_70a2084215a822d7590d09199578719d.setContent(html_f1e012d053eaf3ce6fa3df25e3e4510a);
+            
+        
+
+        marker_308065ef82d6eb9030856bf23916ea0c.bindPopup(popup_70a2084215a822d7590d09199578719d)
+        ;
+
+        
+    
+    
+            marker_308065ef82d6eb9030856bf23916ea0c.bindTooltip(
+                `<div>
+                     [A3] 青良書店 | 14:00 - 16:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_308065ef82d6eb9030856bf23916ea0c.setIcon(div_icon_dc4a2de4f53e6553e3687a49a0582afa);
+            
+    
+            var marker_7215c4cf1da0847df27790f94aecf90a = L.marker(
+                [25.0440698, 121.5293583],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_74194dfc23d21161a43284728cb759c3 = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #E74C3C;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eA4\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_9e473597e40644b1501b25f1b99b3319 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_19c90167465527e9a7621d1135b8fdeb = $(`<div id="html_19c90167465527e9a7621d1135b8fdeb" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#E74C3C; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             療癒文青花園漫遊         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ④ 華山1914文創園區             </div>             <div style="color:#555; margin-bottom:6px;">🕐 16:30 - 19:00</div>             <div style="color:#444; line-height:1.5;">作為『文青』必訪的文創園區，有豐富的藝文展覽和特色小店，符合『預算中等』。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJbSTgI2WpQjQRcVwWB2cnyfE"                    target="_blank"                    style="color:#E74C3C; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_9e473597e40644b1501b25f1b99b3319.setContent(html_19c90167465527e9a7621d1135b8fdeb);
+            
+        
+
+        marker_7215c4cf1da0847df27790f94aecf90a.bindPopup(popup_9e473597e40644b1501b25f1b99b3319)
+        ;
+
+        
+    
+    
+            marker_7215c4cf1da0847df27790f94aecf90a.bindTooltip(
+                `<div>
+                     [A4] 華山1914文創園區 | 16:30 - 19:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7215c4cf1da0847df27790f94aecf90a.setIcon(div_icon_74194dfc23d21161a43284728cb759c3);
+            
+    
+            var poly_line_c26c6dfcf986c69cd1253c3faa6504ff = L.polyline(
+                [[25.0597689, 121.509508], [25.0561135, 121.5074769], [25.0447196, 121.5072979]],
+                {"bubblingMouseEvents": true, "color": "#2980B9", "dashArray": "8 4", "dashOffset": null, "fill": false, "fillColor": "#2980B9", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            poly_line_c26c6dfcf986c69cd1253c3faa6504ff.bindTooltip(
+                `<div>
+                     路線 B：大稻埕慢活文青行
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f7419efaaca09261f3c28489e255eee2 = L.marker(
+                [25.0597689, 121.509508],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_69e2358ddf620fd1964fd77d7abc182a = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #2980B9;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eB1\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_735decb02f16d9374866193be01fb4bb = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_be189dc50882e62bae137d4f50b43a1d = $(`<div id="html_be189dc50882e62bae137d4f50b43a1d" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#2980B9; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             大稻埕慢活文青行         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ① 里Ura             </div>             <div style="color:#555; margin-bottom:6px;">🕐 11:00 - 13:00</div>             <div style="color:#444; line-height:1.5;">位於大稻埕的特色老宅咖啡廳，完美體現『文青』與『安靜』的『老城慢活』風格。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJQ65j_bypQjQRozjMus1IkFQ"                    target="_blank"                    style="color:#2980B9; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_735decb02f16d9374866193be01fb4bb.setContent(html_be189dc50882e62bae137d4f50b43a1d);
+            
+        
+
+        marker_f7419efaaca09261f3c28489e255eee2.bindPopup(popup_735decb02f16d9374866193be01fb4bb)
+        ;
+
+        
+    
+    
+            marker_f7419efaaca09261f3c28489e255eee2.bindTooltip(
+                `<div>
+                     [B1] 里Ura | 11:00 - 13:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f7419efaaca09261f3c28489e255eee2.setIcon(div_icon_69e2358ddf620fd1964fd77d7abc182a);
+            
+    
+            var marker_dc57118e26505e9a1faed20dc6b30244 = L.marker(
+                [25.0561135, 121.5074769],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_d119d9fb8cd21f79e1ab0c31859c7692 = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #2980B9;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eB2\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_16b987e452f4462ff088165381d409a3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1ddff887a8d1ca7141e78556fd506fba = $(`<div id="html_1ddff887a8d1ca7141e78556fd506fba" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#2980B9; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             大稻埕慢活文青行         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ② 大稻埕             </div>             <div style="color:#555; margin-bottom:6px;">🕐 13:30 - 16:00</div>             <div style="color:#444; line-height:1.5;">漫步在充滿歷史感的街區，感受獨特的『老城』氛圍與復古情懷。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJIWBDRhGpQjQRvziv5q6gr20"                    target="_blank"                    style="color:#2980B9; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_16b987e452f4462ff088165381d409a3.setContent(html_1ddff887a8d1ca7141e78556fd506fba);
+            
+        
+
+        marker_dc57118e26505e9a1faed20dc6b30244.bindPopup(popup_16b987e452f4462ff088165381d409a3)
+        ;
+
+        
+    
+    
+            marker_dc57118e26505e9a1faed20dc6b30244.bindTooltip(
+                `<div>
+                     [B2] 大稻埕 | 13:30 - 16:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_dc57118e26505e9a1faed20dc6b30244.setIcon(div_icon_d119d9fb8cd21f79e1ab0c31859c7692);
+            
+    
+            var marker_2e0469ebca05a1394fe2648ac9473f4a = L.marker(
+                [25.0447196, 121.5072979],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_95a11c763deec38f34e0b07b61d6e5ef = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #2980B9;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eB3\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_ee85f2c0aea163dd74859e8b6697a60a = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_97f66237e933e8513f5379f9897911ac = $(`<div id="html_97f66237e933e8513f5379f9897911ac" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#2980B9; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             大稻埕慢活文青行         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ③ FUFUCatCafe             </div>             <div style="color:#555; margin-bottom:6px;">🕐 16:30 - 18:30</div>             <div style="color:#444; line-height:1.5;">在『貓咪友善』的『咖啡廳』享受悠閒，為『療癒系』旅程劃下句點。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJp4XAHX6rQjQR9sjrYtvV564"                    target="_blank"                    style="color:#2980B9; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_ee85f2c0aea163dd74859e8b6697a60a.setContent(html_97f66237e933e8513f5379f9897911ac);
+            
+        
+
+        marker_2e0469ebca05a1394fe2648ac9473f4a.bindPopup(popup_ee85f2c0aea163dd74859e8b6697a60a)
+        ;
+
+        
+    
+    
+            marker_2e0469ebca05a1394fe2648ac9473f4a.bindTooltip(
+                `<div>
+                     [B3] FUFUCatCafe | 16:30 - 18:30
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2e0469ebca05a1394fe2648ac9473f4a.setIcon(div_icon_95a11c763deec38f34e0b07b61d6e5ef);
+            
+    
+            var poly_line_8839c1c8feadaf0f9b6999c8f5e66ca8 = L.polyline(
+                [[25.0438366, 121.5606383], [25.0382251, 121.5498394], [25.031723, 121.5601526], [25.0776139, 121.547962]],
+                {"bubblingMouseEvents": true, "color": "#27AE60", "dashArray": "8 4", "dashOffset": null, "fill": false, "fillColor": "#27AE60", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            poly_line_8839c1c8feadaf0f9b6999c8f5e66ca8.bindTooltip(
+                `<div>
+                     路線 C：室內文藝漫遊備案
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_12de425f1f6f55a274cf7ae4fbd9c74a = L.marker(
+                [25.0438366, 121.5606383],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_c03b6de1ced8eec0a0fff1663f34580d = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #27AE60;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eC1\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_b35c56397cb543e654ef18837cb99a8a = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c1dc5b876fef7f89e4b855ca801fdad5 = $(`<div id="html_c1dc5b876fef7f89e4b855ca801fdad5" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#27AE60; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             室內文藝漫遊備案         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ① 松山文創園區             </div>             <div style="color:#555; margin-bottom:6px;">🕐 09:00 - 12:00</div>             <div style="color:#444; line-height:1.5;">台北重要的『文創』園區，擁有豐富的室內展覽與設計店，非常適合『雨天備案』。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJO0vOI7-rQjQR3Pl9_4cPK8g"                    target="_blank"                    style="color:#27AE60; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_b35c56397cb543e654ef18837cb99a8a.setContent(html_c1dc5b876fef7f89e4b855ca801fdad5);
+            
+        
+
+        marker_12de425f1f6f55a274cf7ae4fbd9c74a.bindPopup(popup_b35c56397cb543e654ef18837cb99a8a)
+        ;
+
+        
+    
+    
+            marker_12de425f1f6f55a274cf7ae4fbd9c74a.bindTooltip(
+                `<div>
+                     [C1] 松山文創園區 | 09:00 - 12:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_12de425f1f6f55a274cf7ae4fbd9c74a.setIcon(div_icon_c03b6de1ced8eec0a0fff1663f34580d);
+            
+    
+            var marker_35dc7c5b7b032983b2c5bb8ed72136e7 = L.marker(
+                [25.0382251, 121.5498394],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_9712bf28a5a544216d8b805bd0900d9f = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #27AE60;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eC2\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_937fa38e6dd88c5c731eb6a5d997f7f2 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_752e0c18adac35582563f994fb7bee8c = $(`<div id="html_752e0c18adac35582563f994fb7bee8c" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#27AE60; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             室內文藝漫遊備案         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ② 共樂 Gung Lok             </div>             <div style="color:#555; margin-bottom:6px;">🕐 12:30 - 14:00</div>             <div style="color:#444; line-height:1.5;">一家有特色的『咖啡廳』，提供港式點心，可在室內享受『安靜』的午茶時光。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJZxHWZiCrQjQRAdt0K4KjLmw"                    target="_blank"                    style="color:#27AE60; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_937fa38e6dd88c5c731eb6a5d997f7f2.setContent(html_752e0c18adac35582563f994fb7bee8c);
+            
+        
+
+        marker_35dc7c5b7b032983b2c5bb8ed72136e7.bindPopup(popup_937fa38e6dd88c5c731eb6a5d997f7f2)
+        ;
+
+        
+    
+    
+            marker_35dc7c5b7b032983b2c5bb8ed72136e7.bindTooltip(
+                `<div>
+                     [C2] 共樂 Gung Lok | 12:30 - 14:00
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_35dc7c5b7b032983b2c5bb8ed72136e7.setIcon(div_icon_9712bf28a5a544216d8b805bd0900d9f);
+            
+    
+            var marker_8e17fac242a459b4bbb4bd072759fa1a = L.marker(
+                [25.031723, 121.5601526],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_3ea0bfa0f5be3d7a2bc488c6ee854390 = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #27AE60;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eC3\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_2e3e22d4a3bae94d3022163e54158741 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_03e75aa78e16f07ef15459d09e679819 = $(`<div id="html_03e75aa78e16f07ef15459d09e679819" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#27AE60; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             室內文藝漫遊備案         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ③ 青春漢堡台北店             </div>             <div style="color:#555; margin-bottom:6px;">🕐 14:30 - 16:30</div>             <div style="color:#444; line-height:1.5;">『文青』風格的漢堡店，提供舒適的室內用餐環境，適合輕鬆的下午茶或早晚餐。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJcfB5sMarQjQROm72E-2Hlfo"                    target="_blank"                    style="color:#27AE60; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_2e3e22d4a3bae94d3022163e54158741.setContent(html_03e75aa78e16f07ef15459d09e679819);
+            
+        
+
+        marker_8e17fac242a459b4bbb4bd072759fa1a.bindPopup(popup_2e3e22d4a3bae94d3022163e54158741)
+        ;
+
+        
+    
+    
+            marker_8e17fac242a459b4bbb4bd072759fa1a.bindTooltip(
+                `<div>
+                     [C3] 青春漢堡台北店 | 14:30 - 16:30
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8e17fac242a459b4bbb4bd072759fa1a.setIcon(div_icon_3ea0bfa0f5be3d7a2bc488c6ee854390);
+            
+    
+            var marker_f715039bbe8d75340a5f3bfbbd83d3ae = L.marker(
+                [25.0776139, 121.547962],
+                {
+}
+            ).addTo(map_d870618a43ed4fb443af920deaaddff3);
+        
+    
+            var div_icon_3f17be05b59a0efa0c4aa742b01097ba = L.divIcon({
+  "html": "\n    \u003cdiv style=\"\n        background-color: #27AE60;\n        color: white;\n        border-radius: 50%;\n        width: 32px;\n        height: 32px;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-size: 13px;\n        font-weight: bold;\n        border: 2px solid white;\n        box-shadow: 0 2px 4px rgba(0,0,0,0.4);\n        font-family: sans-serif;\n    \"\u003eC4\u003c/div\u003e\n    ",
+  "iconSize": [36, 36],
+  "iconAnchor": [18, 18],
+  "className": "empty",
+});
+        
+    
+        var popup_b48565bb0f128da48692b9ae90e212e6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_508bdf41a159bffea07dc54f166133d7 = $(`<div id="html_508bdf41a159bffea07dc54f166133d7" style="width: 100.0%; height: 100.0%;">     <div style="min-width:220px; font-family:sans-serif; font-size:13px;">         <div style="background:#27AE60; color:white; padding:6px 10px; border-radius:4px 4px 0 0; font-weight:bold;">             室內文藝漫遊備案         </div>         <div style="padding:10px; border:1px solid #eee; border-top:none; border-radius:0 0 4px 4px;">             <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">                 ④ ARKI GALERIA 築空間             </div>             <div style="color:#555; margin-bottom:6px;">🕐 17:00 - 18:30</div>             <div style="color:#444; line-height:1.5;">提供『文藝』氛圍的下午茶體驗，是個享受『安靜』與藝術的『室內』空間。</div>             <div style="margin-top:8px;">                 <a href="https://www.google.com/maps/place/?q=place_id:ChIJgTbxDwasQjQRt1fqnk7l8ek"                    target="_blank"                    style="color:#27AE60; text-decoration:none; font-size:12px;">                     📍 在 Google Maps 開啟                 </a>             </div>         </div>     </div>     </div>`)[0];
+                popup_b48565bb0f128da48692b9ae90e212e6.setContent(html_508bdf41a159bffea07dc54f166133d7);
+            
+        
+
+        marker_f715039bbe8d75340a5f3bfbbd83d3ae.bindPopup(popup_b48565bb0f128da48692b9ae90e212e6)
+        ;
+
+        
+    
+    
+            marker_f715039bbe8d75340a5f3bfbbd83d3ae.bindTooltip(
+                `<div>
+                     [C4] ARKI GALERIA 築空間 | 17:00 - 18:30
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f715039bbe8d75340a5f3bfbbd83d3ae.setIcon(div_icon_3f17be05b59a0efa0c4aa742b01097ba);
+            
+</script>
+</html>
